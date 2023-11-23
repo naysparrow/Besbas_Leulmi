@@ -1,0 +1,188 @@
+Class {
+	#name : #Bomberman,
+	#superclass : #Object,
+	#category : #'Myg-Bomberman-Toplo'
+}
+
+{ #category : #'private - menu building' }
+Bomberman class >> menuBar [
+
+	| bar |
+	bar := ToMenuBar new
+		       hMatchParent;
+		       vFitContent.
+	bar border: (BlBorder paint: Color red).
+	^ bar
+]
+
+{ #category : #'private - menu building' }
+Bomberman class >> menuHelp [
+
+	| menu |
+	menu := ToMenu new.
+	menu labelText: 'Help'.
+	menu iconImage: (Smalltalk ui icons iconNamed: #glamorousHelp).
+	menu whenClickedDo: [
+		| container lab space |
+		lab := ToLabel text: 'How to play:
+		 
+Sokoban is a puzzle video game in which the player pushes boxes around in a warehouse, trying to get them to storage locations. 
+The game was designed in 1981 by Hiroyuki Imabayashi, and first published in December 1982.
+
+The game is played on a board of squares, where each square is a floor or a wall. 
+Some floor squares contain boxes, and some floor squares are marked as storage locations.
+
+The player is confined to the board and may move horizontally or vertically onto empty squares (never through walls or boxes). 
+The player can move a box by walking up to it and push it to the square beyond. 
+Boxes cannot be pulled, and they cannot be pushed to squares with walls or other boxes. 
+The number of boxes equals the number of storage locations. 
+The puzzle is solved when all boxes are placed at storage locations
+	
+-----
+
+Bindings :
+
+Arrows : to move the player around
+Spacebar : to reset the level or replay it when finished
+Escape : to exit the current level
+
+-----
+You can start playing with the ''Levels'' menu and choose a level you would like to play
+			
+Have fun !' asRopedText.
+		lab beMultiLine.
+		lab hMatchParent.
+		container := BlElement new
+			             background: Color lightRed;
+			             padding: (BlInsets all: 15);
+			             layout: BlLinearLayout vertical;
+			             constraintsDo: [ :c |
+				             c horizontal fitContent.
+				             c vertical fitContent ].
+		container addChild: lab.
+		space := BlSpace new.
+		space root
+			layout: BlFrameLayout new;
+			addChild: container;
+			constraintsDo: [ :c |
+				c horizontal matchParent.
+				c vertical fitContent ].
+		space pulse.
+		space extent: container extent.
+		space show ].
+	^ menu
+]
+
+{ #category : #'private - menu building' }
+Bomberman class >> open [
+	<script>
+
+	| space container levelMenu helpMenu bar title paging |
+	
+	helpMenu := self menuHelp.
+	bar := self menuBar.
+	title := self title.
+	paging := MygToploPaging levelPaging.
+	container := BlElement new
+		             background: Color lightRed;
+		             layout: BlLinearLayout vertical;
+		             constraintsDo: [ :c |
+			             c horizontal matchParent.
+			             c vertical matchParent ].
+	container addChildren: {
+			bar.
+			title.
+			paging }.
+
+	bar addMenu: helpMenu.
+
+	space := BlSpace new.
+	space root addChild: container.
+	space extent: 1000 @ 1000.
+	space show
+]
+
+{ #category : #'private - menu building' }
+Bomberman class >> subMenuPack: aManager [
+
+	| subMenu |
+	subMenu := ToMenu new
+		labelText: 'mazesPack';
+		yourself.
+	MygSkGameManager mazesPack withIndexDo: [ :string :i |
+		| stream |
+		stream := String streamContents: [ :out | out print: i ].
+		subMenu addItem:
+			(ToMenuItem new
+				labelText: stream;
+				whenClickedDo: [
+					aManager
+						launchFromString: string
+						inDictionary: 'mazesPack'
+						at: i ];
+				yourself) ].
+
+	^ subMenu
+]
+
+{ #category : #'private - menu building' }
+Bomberman class >> subMenuTest: aManager [
+
+	| subMenu |
+	subMenu := ToMenu new
+		labelText: 'mazesTest';
+		yourself.
+	MygSkGameManager mazesTest withIndexDo: [ :string :i |
+		| stream |
+		stream := String streamContents: [ :out | out print: i ].
+		subMenu addItem:
+			(ToMenuItem new
+				labelText: stream;
+				whenClickedDo: [
+					aManager
+						launchFromString: string
+						inDictionary: 'mazesTest'
+						at: i ];
+				yourself) ].
+
+	^ subMenu
+]
+
+{ #category : #'private - menu building' }
+Bomberman class >> subMenuUAlberta: aManager [
+
+	| subMenu |
+	subMenu := ToMenu new
+		labelText: 'mazesUAlberta';
+		yourself.
+	MygSkGameManager mazesUAlberta withIndexDo: [ :string :i |
+		| stream |
+		stream := String streamContents: [ :out | out print: i ].
+		subMenu addItem:
+			(ToMenuItem new
+				labelText: stream;
+				whenClickedDo: [
+					aManager
+						launchFromString: string
+						inDictionary: 'mazesUAlberta'
+						at: i ];
+				yourself) ].
+
+	^ subMenu
+]
+
+{ #category : #'private - menu building' }
+Bomberman class >> title [
+
+	| title |
+	title := BlElement new.
+	title size: 50 @ 200.
+	title constraintsDo: [ :c | c horizontal matchParent ].
+	title layout: BlFrameLayout new.
+	title addChild: ((BlTextElement new text: ('Bomberman' asRopedText
+				   fontName: 'Phosphate';
+				   fontSize: 100)) constraintsDo: [ :c |
+			 c frame horizontal alignCenter.
+			 c frame vertical alignCenter ]).
+	^ title
+]
