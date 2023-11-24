@@ -5,14 +5,23 @@ Class {
 }
 
 { #category : #'private - menu building' }
+Bomberman class >> buttonStart [ 
+
+|button|
+button := ToButton new labelText: 'Play'.
+^button
+
+
+]
+
+{ #category : #'private - menu building' }
 Bomberman class >> open [
 	<script>
 
-	| space container  bar title |
+	| space container title button|
 	
-	bar := self menuBar.
 	title := self title.
-	
+	button := self buttonStart.
 	container := BlElement new
 		             background: Color lightRed;
 		             layout: BlLinearLayout vertical;
@@ -20,12 +29,13 @@ Bomberman class >> open [
 			             c horizontal matchParent.
 			             c vertical matchParent ].
 	container addChildren: {
-			bar.
-			title
+			title.
+			button 
 			}.
 
 	space := BlSpace new.
-	space root addChild: container.
+
+	space root addChild: container .
 	space extent: 1000 @ 1000.
 	space show
 ]
