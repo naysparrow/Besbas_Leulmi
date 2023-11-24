@@ -7,8 +7,10 @@ Class {
 { #category : #'private - menu building' }
 Bomberman class >> buttonStart [ 
 
-|button|
-button := ToButton new labelText: 'Play'.
+|button level|
+level := MygBMGameManager levelDisign.
+button := ToButton new labelText: 'Play';
+whenClickedDo:[MygBMGameManager new launchFromString:  level  ].
 ^button
 
 
