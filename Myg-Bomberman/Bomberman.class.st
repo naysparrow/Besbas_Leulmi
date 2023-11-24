@@ -5,23 +5,11 @@ Class {
 }
 
 { #category : #'private - menu building' }
-Bomberman class >> menuBar [
-
-	| bar |
-	bar := ToMenuBar new
-		       hMatchParent;
-		       vFitContent.
-	bar border: (BlBorder paint: Color red).
-	^ bar
-]
-
-{ #category : #'private - menu building' }
 Bomberman class >> open [
 	<script>
 
 	| space container  bar title |
 	
-
 	bar := self menuBar.
 	title := self title.
 	
@@ -33,7 +21,8 @@ Bomberman class >> open [
 			             c vertical matchParent ].
 	container addChildren: {
 			bar.
-			title}.
+			title
+			}.
 
 	space := BlSpace new.
 	space root addChild: container.
