@@ -104,7 +104,7 @@ MygBMGameManager >> launchFromString: aString [
 
 	| board |
 	self currentMoveCount: 0.
-	self currentBoardElement: MygBMBoardElement new.
+	self currentBoardElement: MygSkBoardElement  new.
 	board := MygSkBoard
 		         createWithBoard: (self class importFromString: aString)
 		         managedBy: self.

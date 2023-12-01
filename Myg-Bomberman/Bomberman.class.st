@@ -79,27 +79,6 @@ Amusez-vous bien !' asRopedText.
 	^ menu
 ]
 
-{ #category : #'as yet unclassified' }
-Bomberman class >> menuLevel [
-
-	| menu manager subMenuMicroban subMenuLoma |
-	menu := ToMenu new.
-	menu label: (ToLabel text: 'Levels').
-	menu icon:
-		(ToImage inner: (Smalltalk ui icons iconNamed: #solidMenu)).
-
-	manager := MygBMGameManager menu: menu.
-
-	subMenuLoma := self subMenuLoma: manager.
-	subMenuMicroban := self subMenuMicroban: manager.
-
-	menu addItem: subMenuLoma.
-	menu addItem: subMenuMicroban.
-	menu addItem: (self subMenuTest: manager).
-
-	^ menu
-]
-
 { #category : #'private - menu building' }
 Bomberman class >> open [
 	<script>
@@ -108,7 +87,7 @@ Bomberman class >> open [
 	helpMenu := self menuHelp.
 	bar := self menuBar.
 	title := self title.
-	paging := MygToploPaging levelPaging.
+	paging := self buttonStart.
 	container := BlElement new
 		             background: Color lightMagenta;
 		             layout: BlLinearLayout vertical;
@@ -126,43 +105,6 @@ Bomberman class >> open [
 	space root addChild: container .
 	space extent: 1000 @ 1000.
 	space show
-]
-
-{ #category : #'as yet unclassified' }
-Bomberman class >> subMenuLoma: aManager [
-
-	| subMenu |
-	subMenu := ToMenu new label: (ToLabel new text: 'mazesLoma').
-	1 to: MygBMGameManager mazesLoma size do: [ :i |
-		| stream |
-		stream := String streamContents: [ :out | out print: i ].
-
-		subMenu addItem:
-			((ToButtonMenuItem new labelText: stream) whenClickedDo: [
-				 | string |
-				 string := MygBMGameManager mazesLoma at: i.
-				 aManager launchFromString: string inDictionary: 'mazesLoma' at: i ]) ].
-	^ subMenu
-]
-
-{ #category : #'as yet unclassified' }
-Bomberman class >> subMenuMicroban: aManager [
-
-	| subMenu |
-	subMenu := ToMenu new label: (ToLabel new text: 'mazesMicroban').
-	1 to: MygSkGameManager mazesMicroban size do: [ :i |
-		| stream |
-		stream := String streamContents: [ :out | out print: i ].
-
-		subMenu addItem:
-			((ToButtonMenuItem new labelText: stream) whenClickedDo: [
-				 | string |
-				 string := MygSkGameManager mazesMicroban at: i.
-				 aManager
-					 launchFromString: string
-					 inDictionary: 'mazesMicroban'
-					 at: i ]) ].
-	^ subMenu
 ]
 
 { #category : #'private - menu building' }
