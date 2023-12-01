@@ -168,6 +168,24 @@ MygBMBoard >> player [
 ]
 
 { #category : #adding }
+MygBMBoard >> printOn: aStream [
+
+	(1 to: grid height)
+		do: [ :rowNumber |
+			1 to: grid width do: [ :columnNumber |
+				| el elClass |
+				el := self atColumn: columnNumber atRow: rowNumber .
+				elClass := (el class inheritsFrom: MygBMMovable)
+					           ifFalse: [ el class ]
+					           ifTrue: [
+						           el background class = MygBMGround
+							           ifTrue: [ el class ]
+							           ifFalse: [ (el class asString , 'OnTarget') asClass ] ].
+				aStream nextPut: elClass textualMapCharacter ] ]
+		separatedBy: [ aStream cr ]
+]
+
+{ #category : #adding }
 MygBMBoard >> reset [
 
 	self gameManager launchAgain

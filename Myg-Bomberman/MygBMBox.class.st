@@ -13,7 +13,9 @@ MygBMBox class >> textualMapCharacter [
 { #category : #accessing }
 MygBMBox >> backgroundRepresentation [
 
-	^ self background class = MygSkBoxElement.
+	^ self background class = MygSkTarget
+		  ifTrue: [ MygBMBoxElement boxIconDarker ]
+		  ifFalse: [ MygBMBoxElement boxIcon ]
 ]
 
 { #category : #accessing }
