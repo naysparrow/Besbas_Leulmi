@@ -17,7 +17,7 @@ Class {
 MygBMGameManager class >> importFromString: aString [
 
 	| tmp |
-	tmp := MygLevelImporter fromString: aString fromPackage: MygSkBoard package.
+	tmp := MygLevelImporter fromString: aString fromPackage: MygBMBoard package.
 	tmp := tmp collect: [ :each | each configured ].
 	tmp width < tmp height ifTrue: [ tmp := tmp rotateLeft ].
 	^ tmp
@@ -26,41 +26,19 @@ MygBMGameManager class >> importFromString: aString [
 { #category : #'as yet unclassified' }
 MygBMGameManager class >> levelDisign [
 
-^' 
-#########
-#@     @#
-#       #
-#       #
-#       #
-#       #
-#       #
-#       #
-#       #
-#       #
-#########
-        '
+^' #######
+ #  *  #
+ #  @  #
+ ##$#.##
+ #  #  #
+ # $#. #
+ #  #  #
+## ## ##
+#  * * #
+#   *  #
+###   ##
+  #####'
 yourself 
-]
-
-{ #category : #'as yet unclassified' }
-MygBMGameManager class >> mazesLoma [
-	"hsasquatch/sokoban/loma.html"
-
-	^ IdentityDictionary new
-		  at: 1 put: '  
-#########
-#@     @#
-#       #
-#       #
-#       #
-#       #
-#       #
-#       #
-#       #
-#       #
-#########
-        '; 
-yourself
 ]
 
 { #category : #accessing }
@@ -88,6 +66,31 @@ MygBMGameManager >> currentBoardElement: aBMBoardElement [
 ]
 
 { #category : #'as yet unclassified' }
+MygBMGameManager >> currentLevel [ 
+	
+	^ currentLevel 
+]
+
+{ #category : #'as yet unclassified' }
+MygBMGameManager >> currentLevel: aDictionary [
+
+	currentLevel := aDictionary 
+]
+
+{ #category : #'as yet unclassified' }
+MygBMGameManager >> currentLevelString [
+
+	^ currentLevelString
+]
+
+{ #category : #'as yet unclassified' }
+MygBMGameManager >> currentLevelString: aString [
+
+	currentLevelString := aString
+	
+]
+
+{ #category : #'as yet unclassified' }
 MygBMGameManager >> currentMoveCount [ 
 	
 	^ currentMoveCount 
@@ -100,13 +103,27 @@ MygBMGameManager >> currentMoveCount: aNumber [
 ]
 
 { #category : #'as yet unclassified' }
+MygBMGameManager >> initialize [
+
+	super initialize.
+	currentMoveCount := 0.
+	
+]
+
+{ #category : #'as yet unclassified' }
+MygBMGameManager >> launchAgain [
+
+	self launchFromString: self levelDisgn .
+]
+
+{ #category : #'as yet unclassified' }
 MygBMGameManager >> launchFromString: aString [
 
 	| board |
 	self currentMoveCount: 0.
-	self currentBoardElement: MygSkBoardElement  new.
-	board := MygSkBoard
-		         createWithBoard: (self class importFromString: aString)
+	self currentBoardElement: MygBMBoardElement new.
+	board := MygBMBoard
+		         createWithBoard: ((MygLevelImporter fromString: '   ###   @  ' fromPackage:MygBMBoard package) do: [ :each | each configured ])
 		         managedBy: self.
 	self currentBoardElement openWithModel: board
 ]
