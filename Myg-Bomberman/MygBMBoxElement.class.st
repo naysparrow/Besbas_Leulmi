@@ -246,5 +246,5 @@ MygBMBoxElement >> updateBackgroundColor [
 		size := space extent / boardElement board width
 		        - boardElement firstChild layout cellSpacing.
 		bg := bg scaledIntoFormOfSize: size ].
-
+	self background: bg
 ]
