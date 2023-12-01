@@ -7,10 +7,20 @@ Class {
 { #category : #'private - menu building' }
 Bomberman class >> buttonStart [ 
 
-|button level|
+|button level |
 level := MygBMGameManager levelDisign.
-button := ToButton new labelText: 'Play';
+button := ToButton new.
+button 
+      background: Color veryVeryLightGray;
+		border: (BlBorder paint: Color veryDarkGray).
+button labelText: 'Play'.
+button size: 100@50;
+
 whenClickedDo:[MygBMGameManager new launchFromString:  level  ].
+
+button icon: 
+		(ToImage inner: (Smalltalk ui icons iconNamed: #glamorousLeftSide  )).
+
 ^button
 
 
@@ -23,7 +33,9 @@ Bomberman class >> menuBar [
 	bar := ToMenuBar new
 		       hMatchParent;
 		       vFitContent.
-	bar border: (BlBorder paint: Color black).
+	bar
+		background: Color veryVeryLightGray;
+		border: (BlBorder paint: Color veryDarkGray).
 	^ bar
 ]
 
@@ -83,13 +95,13 @@ Amusez-vous bien !' asRopedText.
 Bomberman class >> open [
 	<script>
 
-	| space container  helpMenu bar title paging |
+	| space container helpMenu bar title button |
 	helpMenu := self menuHelp.
 	bar := self menuBar.
 	title := self title.
-	paging := self buttonStart.
+	button := self buttonStart.
 	container := BlElement new
-		             background: Color lightMagenta;
+		             background: Color purple;
 		             layout: BlLinearLayout vertical;
 		             constraintsDo: [ :c |
 			             c horizontal matchParent.
@@ -97,7 +109,7 @@ Bomberman class >> open [
 	container addChildren: {
 			bar.
 			title.
-			paging }.
+			button }.
 
 	bar addMenu: helpMenu.
 	space := BlSpace new.
@@ -117,6 +129,7 @@ Bomberman class >> title [
 	title layout: BlFrameLayout new.
 	title addChild: ((BlTextElement new text: ('Bomberman' asRopedText
 				   fontName: 'Phosphate';
+				   foreground: Color white;
 				   fontSize: 100)) constraintsDo: [ :c |
 			 c frame horizontal alignCenter.
 			 c frame vertical alignCenter ]).

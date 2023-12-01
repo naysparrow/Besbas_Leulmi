@@ -4,6 +4,29 @@ Class {
 	#category : #'Myg-Bomberman-Toplo'
 }
 
+{ #category : #'as yet unclassified' }
+MygToploPaging class >> buttonPaging [
+
+	| aNotebook manager scrollbar |
+	aNotebook := ToNotebook new
+		             background: Color lightRed darker;
+		             margin: (BlInsets all: 50).
+	manager := MygSkGameManager notebook: aNotebook.
+
+	scrollbar := BlVerticalScrollbarElement new.
+	scrollbar
+		constraintsDo: [ :c | c margin: (BlInsets right: 5) ];
+		attachTo: aNotebook.
+
+	aNotebook
+		addPageTitle: '1vs1'
+		bodyFactory: [ self pagingPack: 'mazesLoma' managedBy: manager ];
+		addPageTitle: '4 players'
+		bodyFactory: [ self pagingPack: 'mazesUAlberta' managedBy: manager ].
+
+	^ aNotebook
+]
+
 { #category : #'accessing - structure variables' }
 MygToploPaging class >> buttonWithPack: aPack withManager: aManager andIndex: i [
 
@@ -30,29 +53,6 @@ MygToploPaging class >> buttonWithPack: aPack withManager: aManager andIndex: i 
 				          inDictionary: aPack
 				          at: i ].
 	^ button
-]
-
-{ #category : #'as yet unclassified' }
-MygToploPaging class >> levelPaging [
-
-	| aNotebook manager scrollbar |
-	aNotebook := ToNotebook new
-		             background: Color lightRed darker;
-		             margin: (BlInsets all: 50).
-	manager := MygSkGameManager notebook: aNotebook.
-
-	scrollbar := BlVerticalScrollbarElement new.
-	scrollbar
-		constraintsDo: [ :c | c margin: (BlInsets right: 5) ];
-		attachTo: aNotebook.
-
-	aNotebook
-		addPageTitle: '1vs1'
-		bodyFactory: [ self pagingPack: 'mazesLoma' managedBy: manager ];
-		addPageTitle: '4 players'
-		bodyFactory: [ self pagingPack: 'mazesUAlberta' managedBy: manager ].
-
-	^ aNotebook
 ]
 
 { #category : #'as yet unclassified' }

@@ -27,40 +27,19 @@ MygBMGameManager class >> importFromString: aString [
 MygBMGameManager class >> levelDisign [
 
 ^' 
-#########
-#@     @#
-#       #
-#       #
-#       #
-#       #
-#       #
-#       #
-#       #
-#       #
-#########
+##########
+#@  ## #@#
+#### # # #
+# # # ## #
+#### # ###
+# # # ## #
+###  # ###
+# # # ## #
+#### # # #
+#@  ## #@#
+##########
         '
 yourself 
-]
-
-{ #category : #'as yet unclassified' }
-MygBMGameManager class >> mazesLoma [
-	"hsasquatch/sokoban/loma.html"
-
-	^ IdentityDictionary new
-		  at: 1 put: '  
-#########
-#@     @#
-#       #
-#       #
-#       #
-#       #
-#       #
-#       #
-#       #
-#       #
-#########
-        '; 
-yourself
 ]
 
 { #category : #accessing }
