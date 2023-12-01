@@ -26,17 +26,53 @@ MygBMGameManager class >> importFromString: aString [
 { #category : #'as yet unclassified' }
 MygBMGameManager class >> levelDisign [
 
-^'  #####
-  #   ##
-  # #  #
-###$.# #
-#  $.#@#
-# #$.# #
-# #    #
-#  # ###
-##   #
- #####'
+^' 
+#########
+#@     @#
+#       #
+#       #
+#       #
+#       #
+#       #
+#       #
+#       #
+#       #
+#########
+        '
 yourself 
+]
+
+{ #category : #'as yet unclassified' }
+MygBMGameManager class >> mazesLoma [
+	"hsasquatch/sokoban/loma.html"
+
+	^ IdentityDictionary new
+		  at: 1 put: '  
+#########
+#@     @#
+#       #
+#       #
+#       #
+#       #
+#       #
+#       #
+#       #
+#       #
+#########
+        '; 
+yourself
+]
+
+{ #category : #accessing }
+MygBMGameManager class >> menu: aToMenu [
+
+	^ self new menu: aToMenu 
+]
+
+{ #category : #accessing }
+MygBMGameManager class >> notebook: aNotebook [
+
+	^ self new notebook: aNotebook 
 ]
 
 { #category : #'as yet unclassified' }

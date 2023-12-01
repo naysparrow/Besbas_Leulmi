@@ -16,30 +16,153 @@ whenClickedDo:[MygBMGameManager new launchFromString:  level  ].
 
 ]
 
+{ #category : #'as yet unclassified' }
+Bomberman class >> menuBar [
+
+	| bar |
+	bar := ToMenuBar new
+		       hMatchParent;
+		       vFitContent.
+	bar border: (BlBorder paint: Color black).
+	^ bar
+]
+
+{ #category : #'as yet unclassified' }
+Bomberman class >> menuHelp [
+
+	| menu |
+	menu := ToMenu new.
+	menu label: (ToLabel text: 'Help').
+	menu icon:
+		(ToImage inner: (Smalltalk ui icons iconNamed: #glamorousHelp)).
+	menu whenClickedDo: [
+		| container lab space |
+		lab := ToLabel text: 'Bomberman est un jeu vidéo de puzzle dans lequel le joueur incarne un personnage qui place des bombes dans un labyrinthe, essayant de détruire les obstacles et d éliminer les ennemis. Le jeu a été conçu en 1983 par Shigeki Fujiwara et a été publié pour la première fois en décembre 1983.
+
+Le jeu se déroule sur un tableau de cases, où chaque case est soit un sol, soit un mur. Certains sols contiennent des bombes, et d autres sont des emplacements marqués pour les bonus ou les améliorations.
+
+Le joueur est confiné dans le labyrinthe et peut se déplacer horizontalement ou verticalement sur des cases vides (sans traverser les murs ou les bombes). Le joueur peut poser une bombe en se déplaçant vers une case vide et la faire exploser après un certain délai. Les bombes peuvent détruire les murs et éliminer les ennemis, mais le joueur doit faire attention à ne pas être pris dans l explosion.
+
+Les ennemis se déplacent de manière autonome dans le labyrinthe, suivant des schémas de déplacement spécifiques. Le joueur doit utiliser des stratégies intelligentes pour éviter les ennemis tout en posant des bombes stratégiquement pour maximiser les dégâts aux obstacles et aux adversaires.
+
+Le jeu propose également des bonus et des améliorations que le joueur peut collecter pour augmenter sa puissance de bombe, sa vitesse de déplacement, etc.
+
+Les commandes du jeu :
+
+    Flèches directionnelles : se déplacer dans le labyrinthe
+    Espace : réinitialiser le niveau ou le rejouer une fois terminé
+    Échap : quitter le niveau actuel
+
+Vous pouvez commencer à jouer en sélectionnant le menu ''Niveaux'' et en choisissant le niveau que vous souhaitez explorer.
+
+Amusez-vous bien !' asRopedText.
+		lab beMultiLine.
+		lab hMatchParent.
+		container := BlElement new
+			             background: Color lightRed;
+			             padding: (BlInsets all: 15);
+			             layout: BlLinearLayout vertical;
+			             constraintsDo: [ :c |
+				             c horizontal fitContent.
+				             c vertical fitContent ].
+		container addChild: lab.
+		space := BlSpace new.
+		space root
+			layout: BlFrameLayout new;
+			addChild: container;
+			constraintsDo: [ :c |
+				c horizontal matchParent.
+				c vertical fitContent ].
+		space pulse.
+		space extent: container extent.
+		space show ].
+	^ menu
+]
+
+{ #category : #'as yet unclassified' }
+Bomberman class >> menuLevel [
+
+	| menu manager subMenuMicroban subMenuLoma |
+	menu := ToMenu new.
+	menu label: (ToLabel text: 'Levels').
+	menu icon:
+		(ToImage inner: (Smalltalk ui icons iconNamed: #solidMenu)).
+
+	manager := MygBMGameManager menu: menu.
+
+	subMenuLoma := self subMenuLoma: manager.
+	subMenuMicroban := self subMenuMicroban: manager.
+
+	menu addItem: subMenuLoma.
+	menu addItem: subMenuMicroban.
+	menu addItem: (self subMenuTest: manager).
+
+	^ menu
+]
+
 { #category : #'private - menu building' }
 Bomberman class >> open [
 	<script>
 
-	| space container title button|
-	
+	| space container  helpMenu bar title paging |
+	helpMenu := self menuHelp.
+	bar := self menuBar.
 	title := self title.
-	button := self buttonStart.
+	paging := MygToploPaging levelPaging.
 	container := BlElement new
-		             background: Color lightRed;
+		             background: Color lightMagenta;
 		             layout: BlLinearLayout vertical;
 		             constraintsDo: [ :c |
 			             c horizontal matchParent.
 			             c vertical matchParent ].
 	container addChildren: {
+			bar.
 			title.
-			button 
-			}.
+			paging }.
 
+	bar addMenu: helpMenu.
 	space := BlSpace new.
 
 	space root addChild: container .
 	space extent: 1000 @ 1000.
 	space show
+]
+
+{ #category : #'as yet unclassified' }
+Bomberman class >> subMenuLoma: aManager [
+
+	| subMenu |
+	subMenu := ToMenu new label: (ToLabel new text: 'mazesLoma').
+	1 to: MygBMGameManager mazesLoma size do: [ :i |
+		| stream |
+		stream := String streamContents: [ :out | out print: i ].
+
+		subMenu addItem:
+			((ToButtonMenuItem new labelText: stream) whenClickedDo: [
+				 | string |
+				 string := MygBMGameManager mazesLoma at: i.
+				 aManager launchFromString: string inDictionary: 'mazesLoma' at: i ]) ].
+	^ subMenu
+]
+
+{ #category : #'as yet unclassified' }
+Bomberman class >> subMenuMicroban: aManager [
+
+	| subMenu |
+	subMenu := ToMenu new label: (ToLabel new text: 'mazesMicroban').
+	1 to: MygSkGameManager mazesMicroban size do: [ :i |
+		| stream |
+		stream := String streamContents: [ :out | out print: i ].
+
+		subMenu addItem:
+			((ToButtonMenuItem new labelText: stream) whenClickedDo: [
+				 | string |
+				 string := MygSkGameManager mazesMicroban at: i.
+				 aManager
+					 launchFromString: string
+					 inDictionary: 'mazesMicroban'
+					 at: i ]) ].
+	^ subMenu
 ]
 
 { #category : #'private - menu building' }
