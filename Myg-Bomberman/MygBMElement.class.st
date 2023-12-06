@@ -50,6 +50,12 @@ MygBMElement >> configured [
 ]
 
 { #category : #accessing }
+MygBMElement >> isDestroy [
+
+	^ false
+]
+
+{ #category : #accessing }
 MygBMElement >> isPlayer [
 	^ false
 ]

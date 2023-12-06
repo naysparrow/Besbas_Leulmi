@@ -31,7 +31,7 @@ MygBMGameManager class >> levelDisign [
 # $ $ $ #
 ### # # #
   # #   #
- ## ### ##
+ ## BT ### ##
  # @#
  # $ $   #
  # ### ###
