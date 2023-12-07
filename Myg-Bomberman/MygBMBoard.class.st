@@ -243,3 +243,20 @@ MygBMBoard >> updatePositionOf: aSkMovable from: previousPosition [
 MygBMBoard >> width [
 	^ grid width
 ]
+
+{ #category : #accessing }
+MygBMBoard >> adjacentBoxesTo: aPosition [
+    | adjacentPositions boxes |
+    
+    "Assuming that CpDirection represents the four cardinal directions."
+    adjacentPositions := CpDirection allBut: CpDirection origin collect: [ :direction |
+        aPosition + direction directionVector.
+    ].
+    
+    "Filter out invalid positions and return the corresponding boxes."
+    boxes := adjacentPositions select: [ :position |
+        (self isValidPosition: position) and: [ (self boxAt: position) isNotNil ].
+    ].
+    
+    ^ boxes.
+]
