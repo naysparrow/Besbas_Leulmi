@@ -99,3 +99,7 @@ MygBMPlayer >> handleKeyPress: aKey [
         self handleBombPlacement.
     ].
 ]
+
+MygBMPlayer >> handleKeyPress: aKey [
+    (MygBMKeyHandler handlerForKey: aKey) handleKeyPress: self.
+]
