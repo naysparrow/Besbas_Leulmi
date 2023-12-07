@@ -50,7 +50,7 @@ MygBMElement >> configured [
 ]
 
 { #category : #accessing }
-MygBMElement >> isDestroy [
+MygBMElement >> isBreakable [ 
 
 	^ false
 ]

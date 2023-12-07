@@ -95,6 +95,12 @@ MygBMBoard >> atPosition: aCpPositionable [
 ]
 
 { #category : #adding }
+MygBMBoard >> boxes [ 
+
+^boxes
+]
+
+{ #category : #adding }
 MygBMBoard >> configureGrid: aCTNewArray2D [
 
 	super configureGrid: aCTNewArray2D.
@@ -186,6 +192,15 @@ MygBMBoard >> printOn: aStream [
 ]
 
 { #category : #adding }
+MygBMBoard >> removeBox: aBox [ 
+"Remove the specified box from the board."
+
+boxes remove: aBox.
+
+self atColumn: aBox position x atRow: aBox position y  put: aBox background.
+]
+
+{ #category : #adding }
 MygBMBoard >> reset [
 
 	self gameManager launchAgain
@@ -220,7 +235,8 @@ MygBMBoard >> updatePositionOf: aSkMovable from: previousPosition [
 		atColumn: aSkMovable position x
 		atRow: aSkMovable position y
 		put: aSkMovable.
-	self isFinished ifTrue: [ self endGame ]
+	self isFinished ifTrue: [ self endGame ].
+	(aSkMovable isKindOf: MygBMBreakBox) ifTrue: [ self removeBox: aSkMovable. ].
 ]
 
 { #category : #adding }

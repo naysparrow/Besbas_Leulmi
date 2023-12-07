@@ -54,3 +54,15 @@ MygBMPlayer >> move: aCpDirection [
 	self facing: aCpDirection class.
 	^ super move: aCpDirection
 ]
+
+{ #category : #accessing }
+MygBMPlayer >> placeBomb [ 
+
+ |position1 bomb|
+
+position1 := self position.
+bomb := MygBMBomb new.
+bomb basicPosition: position1.
+self board addBox: bomb.
+bomb explode.
+]
