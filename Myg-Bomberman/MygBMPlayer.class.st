@@ -92,3 +92,10 @@ MygBMPlayer >> handleBombPlacement [
         bomb explode.
     ].
 ]
+
+{ #category : #input }
+MygBMPlayer >> handleKeyPress: aKey [
+    aKey = 'B' ifTrue: [
+        self handleBombPlacement.
+    ].
+]
