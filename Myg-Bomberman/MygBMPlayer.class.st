@@ -66,3 +66,29 @@ bomb basicPosition: position1.
 self board addBox: bomb.
 bomb explode.
 ]
+
+{ #category : #gameplay }
+MygBMPlayer >> handleBombPlacement [
+    | position bomb |
+
+    "Assuming that CpDirection represents the direction in front of the player."
+    position := self position + (self facing directionVector).
+    
+    "Check if the position is valid (not out of bounds)."
+    (self board isValidPosition: position) ifTrue: [
+        "Create a new bomb and place it at the calculated position."
+        bomb := MygBMBomb new.
+        bomb basicPosition: position.
+        self board addBox: bomb.
+        
+        "Check for adjacent breakable boxes and destroy them."
+        (self board adjacentBoxesTo: position) do: [ :adjacentBox |
+            (adjacentBox isBreakable and: [ adjacentBox isAdjacentTo: position ]) ifTrue: [
+                self board removeBox: adjacentBox.
+            ].
+        ].
+        
+        "Trigger bomb explosion logic."
+        bomb explode.
+    ].
+]
