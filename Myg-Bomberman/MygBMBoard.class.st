@@ -221,6 +221,36 @@ MygBMBoard >> setBoxes [
 ]
 
 { #category : #adding }
+MygBMBoard >> setFinalDoor [ 
+
+|door randx randy pos|
+
+door := MygBMDoor new.
+
+randx := (1 to: self width ) atRandom.
+randy := (1 to: self height) atRandom .
+
+self atColumn: randx  atRow: randy   put: door.
+pos := (randx@randy).
+
+door position: pos.
+^door  
+]
+
+{ #category : #adding }
+MygBMBoard >> setKey [ 
+
+|randx randy case|
+	
+	randx := (1 to: self width) atRandom.
+	randy := (1 to: self height) atRandom.
+	
+	case := self atColumn: randx  atRow: randy.
+	
+	case setKey.
+]
+
+{ #category : #adding }
 MygBMBoard >> setPlayer [
 
 	player := grid contents detect: #isPlayer

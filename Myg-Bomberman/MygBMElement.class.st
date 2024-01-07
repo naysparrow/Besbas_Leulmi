@@ -1,6 +1,10 @@
 Class {
 	#name : #MygBMElement,
 	#superclass : #MygAbstractBox,
+	#instVars : [
+		'background',
+		'key'
+	],
 	#category : #'Myg-Bomberman-Model'
 }
 
@@ -16,10 +20,25 @@ MygBMElement class >> textualMapCharacter [
 ]
 
 { #category : #accessing }
-MygBMElement >> basicPosition: aPosition [
-	"A position is a x,y kind of object."
-	
-	position := aPosition
+MygBMElement >> background [ 
+^ background 
+]
+
+{ #category : #accessing }
+MygBMElement >> background: anObj [
+ background := anObj 
+]
+
+{ #category : #accessing }
+MygBMElement >> basicPosition: aPosition [ 
+
+position := aPosition 
+]
+
+{ #category : #accessing }
+MygBMElement >> board: board [ 
+
+super board: board 
 ]
 
 { #category : #accessing }
@@ -50,6 +69,30 @@ MygBMElement >> configured [
 ]
 
 { #category : #accessing }
+MygBMElement >> containKey [ 
+
+^key
+]
+
+{ #category : #accessing }
+MygBMElement >> explose [ 
+
+^false 
+]
+
+{ #category : #accessing }
+MygBMElement >> isBox [ 
+
+^false
+]
+
+{ #category : #accessing }
+MygBMElement >> isKey [ 
+
+^false
+]
+
+{ #category : #accessing }
 MygBMElement >> isPlayer [
 	^ false
 ]
@@ -57,6 +100,11 @@ MygBMElement >> isPlayer [
 { #category : #accessing }
 MygBMElement >> isTarget [
 	^ false
+]
+
+{ #category : #accessing }
+MygBMElement >> isWall [
+^false
 ]
 
 { #category : #accessing }
@@ -79,4 +127,11 @@ MygBMElement >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $-.
 	position printOn: aStream
+]
+
+{ #category : #accessing }
+MygBMElement >> setKey [ 
+
+key := false.
+^self board setKey.
 ]

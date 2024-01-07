@@ -11,6 +11,12 @@ MygBMBomb class >> textualMapCharacter [
 ]
 
 { #category : #'as yet unclassified' }
+MygBMBomb >> accept: aVisitor [ 
+
+aVisitor visitBomb: self.
+]
+
+{ #category : #'as yet unclassified' }
 MygBMBomb >> explose [ 
 |previousPosition|
 

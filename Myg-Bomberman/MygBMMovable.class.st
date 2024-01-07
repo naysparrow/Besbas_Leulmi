@@ -1,10 +1,6 @@
 Class {
 	#name : #MygBMMovable,
 	#superclass : #MygBMElement,
-	#instVars : [
-		'background',
-		'key'
-	],
 	#category : #'Myg-Bomberman-Model'
 }
 

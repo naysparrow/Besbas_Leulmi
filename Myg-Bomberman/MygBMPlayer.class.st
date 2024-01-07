@@ -14,6 +14,12 @@ MygBMPlayer class >> textualMapCharacter [
 ]
 
 { #category : #accessing }
+MygBMPlayer >> accept: aVisitor [ 
+
+aVisitor visitPlayer: self.
+]
+
+{ #category : #accessing }
 MygBMPlayer >> backgroundRepresentation [
 
 	| dict |

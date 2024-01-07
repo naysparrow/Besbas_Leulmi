@@ -42,3 +42,11 @@ MygBMBox >> isBox [
 
 	^ true
 ]
+
+{ #category : #accessing }
+MygBMBox >> setKey [ 
+
+key := true.
+	self board setPositionKey: self .
+	^true.
+]
