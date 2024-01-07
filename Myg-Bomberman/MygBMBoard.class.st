@@ -125,6 +125,20 @@ MygBMBoard >> ended [
 ]
 
 { #category : #adding }
+MygBMBoard >> exploseBombAt: aPosition [
+
+|bomb|
+
+bomb:= self elementAt: aPosition.
+bomb isKindOf: MygBMBomb ifFalse:[^#()].
+
+bomb explose.
+bomb exploseNeighbors.
+
+self removeElement: bomb at: aPosition.
+]
+
+{ #category : #adding }
 MygBMBoard >> gameManager [ 
 	
 	^ gameManager 
@@ -134,6 +148,14 @@ MygBMBoard >> gameManager [
 MygBMBoard >> gameManager: aSkGameManager [
 
 	gameManager:= aSkGameManager 
+
+]
+
+{ #category : #adding }
+MygBMBoard >> hasElement: anElement at: aPosition [ 
+"cette methode vérifie si un element spécifique est present a une position sur le plateau"
+
+^(self elementAt: aPosition = anElement).
 
 ]
 
