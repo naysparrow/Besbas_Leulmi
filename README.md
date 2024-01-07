@@ -19,4 +19,11 @@ nous avons repris la structure du jeu Sokoban pour la gestion du plateau et du p
 En effet dans Sokoban cette aspect etait déja fait 
 on a donc ajouter la bombe et les interactions 
 
+# a faire 
+
+utilisation d'un disign pattern Strategy pour les élement ayant des comportements variés : 
+exemples : les types de mouvements ou d'actions pour le player , cela permettrai de changer dynamiquement les algorithmes utilisés
+
+utilisation du visitor pattern pour la gestions des interactions complexes entre types d'objets , comme les bombes , joueurs , murs
+
 
